@@ -65,7 +65,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
               console.log(`Sentiment score: ${sentiment.score}`);
               console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
 
-              response+=`We sensed you sentiment to be ${sentiment.score}. `;
+              response+=`We sensed your sentiment to be ${sentiment.score}. `;
 
               if(correctTime=='Yes'){
                   var answerTime = 'a good';
@@ -79,9 +79,14 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
               var timeString = timePeriod.unit;
               console.log(timeString);
               console.log(timeString.indexOf("day") !== -1);
+
+              if (sentiment > 0){
+                  x += 1;
+              }
+
 // ----SECONDS MINUTES HOURS
               if ((timeString == "s(s)") || (timeString == "min") ||
-                  (timeString.indexOf("hours") !== -1)) {
+                  (timeString.indexOf("h") !== -1)) {
 
                   if (commitmentLevel >= 8) {
                       x += 1;
@@ -91,8 +96,8 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
                   }
                   if (goalAlignment !== null) {
                       var goalString = goalAlignment;
-                      if (goalString.indexOf("not") !== -1 || goalString.indexOf("unsure") !== -1 ||
-                          goalString.indexOf("don't") !== -1) {
+                      if (goalAlignment.indexOf("ot") !== -1 || goalAlignment.indexOf("nsure") !== -1 ||
+                          goalAlignment.indexOf("on't") !== -1 || goalAlignment.indexOf("ad") !== -1 ) {
                           x += 0;
                       }
                       else {
@@ -107,10 +112,10 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
                           x += 1;
                       }
                   }
-                  if (pastExperience.indexOf("positive") !== -1) {
+                  if (pastExperience.indexOf("ositive")!==-1) {
                       x += 1;
                   }
-                  if (determineFun.indexOf("yes") !== -1) {
+                  if (determineFun.indexOf("es") !== -1 || determineFun.indexOf("eah") !== -1) {
                       x += 1;
                   }
               }
@@ -132,8 +137,8 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
                   }
                   console.log(`goalAlign: ${goalAlignment}`)
                   if (goalAlignment !== null){
-                      if (goalAlignment.indexOf("not") !== -1 || goalAlignment.indexOf("unsure") !== -1 ||
-                          goalAlignment.indexOf("don't")!==-1){
+                      if (goalAlignment.indexOf("ot") !== -1 || goalAlignment.indexOf("nsure") !== -1 ||
+                          goalAlignment.indexOf("on't") !== -1 || goalAlignment.indexOf("ad") !== -1 ){
                           x+=0;
                       }
                       else{
@@ -146,18 +151,17 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
                       x+=1;
                   }
                   console.log(`correct Time: ${correctTime}`)
-                  if (correctTime !== null){
-                      if (correctTime.indexOf("yes")!==-1){
+
+                  if (correctTime.indexOf("es") !== -1  || correctTime.indexOf("eah") !== -1){
                           x+=1;
-                      }
                   }
                   console.log(`pastExp: ${pastExperience}`)
 
-                  if (pastExperience.indexOf("positive")!==-1){
+                  if (pastExperience.indexOf("ositive")!==-1){
                       x+=1;
                   }
                   console.log(`determineFun: ${determineFun}`)
-                  if (determineFun.indexOf("yes")!==-1){
+                  if (determineFun.indexOf("es") !== -1 || determineFun.indexOf("eah") !== -1){
                       x+=1;
                   }
 
@@ -174,8 +178,8 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
                       x += 0;
                   }
                   if (goalAlignment !== null) {
-                      if (goalAlignment.indexOf("not") !== -1 || goalAlignment.indexOf("unsure") !== -1 ||
-                          goalAlignment.indexOf("don't") !== -1) {
+                      if (goalAlignment.indexOf("ot") !== -1 || goalAlignment.indexOf("nsure") !== -1 ||
+                          goalAlignment.indexOf("on't") !== -1 || goalAlignment.indexOf("ad") !== -1 ) {
                           x += 0;
                       }
                       else {
@@ -185,55 +189,57 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
                   if (riskLevel < reverseRisk) {
                       x += 1;
                   }
-                  if (correctTime.indexOf("yes") !== -1) {
+                  if (correctTime.indexOf("es") !== -1  || correctTime.indexOf("eah") !== -1) {
                       x += 1;
                   }
 
-                  if (pastExperience.indexOf("positive") !== -1) {
+                  if (pastExperience.indexOf("ositive") !== -1 ) {
                       x += 1;
                   }
-                  if (determineFun.indexOf("yes") !== -1) {
+                  if (determineFun.indexOf("es") !== -1 || determineFun.indexOf("eah") !== -1)  {
                       x += 1;
                   }
               }
 
 
               else {
-                  response += 'You should think about it more. ' + x + ' variable. '
+                  response += 'Alright ' + name + ', you received a score of ' + x + ' out of 7. You should think about it more. '
                       + 'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
                       'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
                       'You feel ' + physicalFeeling + ' about this. ' +
                       'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
                       'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
                       'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
-                      'You said now is ' + correctTime + ' time for this. ' +
+                      'You said now is ' + answerTime + ' time for this. ' +
                       'You said your past experience with this is ' + pastExperience + '. ' +
                       'When asked if this decision could be fun you said '+ determineFun + '!';
 
               }
 
-              if (x > 4){
-                  response+='Sounds like a good idea to me! ' + x + ' variable. '
-                      + 'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
+              if (x >= 5){
+                  response+= 'Hey ' + name + ', you received a score of ' + x + ' out of 8. Sounds like a good idea to me. My help is just ' +
+                      'suggested advice and should be used with common sense. ' +
+                      'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
                       'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
                       'You feel ' + physicalFeeling + ' about this. ' +
                       'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
                       'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
                       'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
-                      'You said now is ' + correctTime + ' time for this. ' +
+                      'You said now is ' + answerTime + ' time for this. ' +
                       'You said your past experience with this is ' + pastExperience + '. ' +
                       'When asked if this decision could be fun you said '+ determineFun + '!';
 
               }
               else {
-                  response+='This might not be the best decision. Maybe try thinking about it more! ' + x + ' variable. '
+                  response+= 'Alright ' + name + ', you received a score of ' + x + ' out of 8. This might not be the best decision for you. ' +
+                      'Take some more time to think about it. My help is just suggested advice and should be used with common sense. '
                       + 'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
                       'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
                       'You feel ' + physicalFeeling + ' about this. ' +
                       'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
                       'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
                       'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
-                      'You said now is ' + correctTime + ' time for this. ' +
+                      'You said now is ' + answerTime + ' time for this. ' +
                       'You said your past experience with this is ' + pastExperience + '. ' +
                       'When asked if this decision could be fun you said '+ determineFun + '!';
               }
