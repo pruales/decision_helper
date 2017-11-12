@@ -7,12 +7,13 @@ const functions = require('firebase-functions');
 // a. the action name from the make_name Dialogflow intent
 const NAME_ACTION = 'make_decision';
 // b. the parameters that are parsed from the make_name intent 
-const NAME_ARGUMENT = 'given-name';
+const NAME_ARGUMENT = 'given_name';
 const TIME_PERIOD_ARGUMENT = 'time_period';
 const COMMITMENT_ARGUMENT = 'commitment_level';
 const PHYSICAL_FEELING_ARGUMENT = 'physical_feeling';
 const GOALS_ARGUMENT = 'goals_aligned';
 const RISKS_ARGUMENT = 'decision_risks';
+const OPPOSITE_RISKS_ARGUMENT = 'opposite_risks';
 
 exports.decisionMaker = functions.https.onRequest((request, response) => {
   const app = new App({request, response});
@@ -28,11 +29,13 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
     let physicalFeeling= app.getArgument(PHYSICAL_FEELING_ARGUMENT);
     let goalAlignment = app.getArgument(GOALS_ARGUMENT);
     let riskLevel = app.getArgument(RISKS_ARGUMENT);
+    let reverseRisk = app.getArgument(OPPOSITE_RISKS_ARGUMENT);
     app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod + ' days!' +
         'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
         'You feel ' + physicalFeeling + ' about this. ' +
         'This decision is ' + goalAlignment + ' with your long-term goals. ' +
-        'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ');
+        'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
+        'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ');
 
   }
   // d. build an action map, which maps intent names to functions
