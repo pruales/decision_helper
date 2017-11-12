@@ -14,6 +14,9 @@ const PHYSICAL_FEELING_ARGUMENT = 'physical_feeling';
 const GOALS_ARGUMENT = 'goals_aligned';
 const RISKS_ARGUMENT = 'decision_risks';
 const OPPOSITE_RISKS_ARGUMENT = 'opposite_risks';
+const TIME_EVALUATION_ARGUMENT = 'right_time';
+const PAST_EXPERIENCES_ARGUMENT = 'past_experiences';
+
 
 exports.decisionMaker = functions.https.onRequest((request, response) => {
   const app = new App({request, response});
@@ -30,12 +33,23 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
     let goalAlignment = app.getArgument(GOALS_ARGUMENT);
     let riskLevel = app.getArgument(RISKS_ARGUMENT);
     let reverseRisk = app.getArgument(OPPOSITE_RISKS_ARGUMENT);
-    app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.units +
+    let correctTime = app.getArgument(TIME_EVALUATION_ARGUMENT);
+    let pastExperience = app.getArgument(PAST_EXPERIENCES_ARGUMENT);
+
+    if(correctTime=='yes'){
+        var answerTime = 'a good';
+    }
+    else {
+        var answerTime = 'not a good';
+    }
+    app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.units + '. ' +
         'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
         'You feel ' + physicalFeeling + ' about this. ' +
-        'This decision is ' + goalAlignment + ' with your long-term goals. ' +
+        'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
         'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
-        'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ');
+        'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
+        'You said now is ' + answerTime + ' for this. ' +
+        'You said your past experience with this is ' + pastExperience + '. ');
 
   }
   // d. build an action map, which maps intent names to functions
