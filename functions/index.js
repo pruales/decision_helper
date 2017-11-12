@@ -66,7 +66,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
               console.log(`Sentiment score: ${sentiment.score}`);
               console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
 
-              response+=`We sensed your sentiment to be ${sentiment.score}. `;
+              //response+=`We sensed your sentiment to be ${sentiment.score}. `;
 
               if(correctTime=='Yes'){
                   var answerTime = 'a good';
@@ -209,7 +209,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
               }
 
               if (x >= 7){
-                  response+= 'Hello ' + name + ', you received a score of ' + x + ' out of 8. Sounds like a good idea to me. My help is just ' +
+                  response+= 'Hello ' + name + ', you received a score of ' + x + ' out of 8. Sounds like a great idea to me. My help is just ' +
                       'suggested advice and should be used with common sense. ';
               }
               else if (x < 7 && x >=5){
