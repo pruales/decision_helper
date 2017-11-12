@@ -209,19 +209,23 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
               }
 
               if (x >= 7){
-                  response+= 'Hello ' + name + ', you received a score of ' + x + ' out of 8. Sounds like a great idea to me. My help is just ' +
+                  response+= 'Hello ' + name + ', based on my analysis, sounds like a great idea to me. My help is just ' +
                       'suggested advice and should be used with common sense. ';
               }
               else if (x < 7 && x >=5){
-                  response+= 'Hey ' + name + ', you received a score of ' + x + ' out of 8. Sounds like you are on the right track. ' +
+                  response+= 'Hey ' + name + ', based on my analysis, sounds like you are on the right track. ' +
                       'Get some advice from a real humanoid. My help is just ' + 'suggested advice and should be used with common sense. ';
               }
               else if (x < 5 && x >=3){
-                  response+= 'Hi ' + name + ', you received a score of ' + x + ' out of 8. Sounds like an idea that needs some work, ' +
-                      'but has potential. My help is just ' + 'suggested advice and should be used with common sense. ';
+                  response+= 'Hi ' + name + ', based on my analysis, sounds like an idea that needs some work, ' +
+                      'but has potential. My help is just suggested advice and should be used with common sense. ';
+              }
+              else if (x == 0){
+                  response+= 'Woah ' + name + ', based on my analysis, you need to scrap this idea and brainstorm some more. ' +
+                      'My help is just ' + 'suggested advice and should be used with common sense. ';
               }
               else {
-                  response+= 'Alright ' + name + ', you received a score of ' + x + ' out of 8. This might not be the best decision for you. ' +
+                  response+= 'Alright ' + name + ', based on my analysis, this might not be the best decision for you. ' +
                       'Take some more time to think about it. My help is just suggested advice and should be used with common sense. ';
               }
 
