@@ -51,7 +51,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
       var timeString = timePeriod.unit;
 
 // ----SECONDS MINUTES HOURS
-      if ((timeString.indexOf("seconds") !== -1) || (timeString.indexOf("minutes") !== -1) ||
+      if ((timeString.indexOf("s(s)") !== -1) || (timeString.indexOf("minutes") !== -1) ||
           (timeString.indexOf("hours") !== -1)){
           x = 0;
           if (commitmentLevel >= 8){
@@ -126,7 +126,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
       }
 
 // ----MONTHS YEARS
-      else if ((timeString.indexOf("months") !== -1) || (timeString.indexOf("years") !== -1)){
+      else if ((timeString.indexOf("months") !== -1) || (timeString.indexOf("yr") !== -1)){
           x = 1;
           if (commitmentLevel >= 6){
               x+=1;
@@ -163,14 +163,41 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
 
 
       else {
-          app.tell('You should think about it more. ' + x + ' variable');
+          app.tell('You should think about it more. ' + x + ' variable. '
+          + 'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
+              'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
+              'You feel ' + physicalFeeling + ' about this. ' +
+              'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
+              'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
+              'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
+              'You said now is ' + answerTime + ' time for this. ' +
+              'You said your past experience with this is ' + pastExperience + '. ' +
+              'When asked if this decision could be fun you said '+ determineFun + '!');
       }
 
       if (x > 4){
-          app.tell('Sounds like a good idea to me! ' + x + ' variable');
+          app.tell('Sounds like a good idea to me! ' + x + ' variable. '
+              + 'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
+              'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
+              'You feel ' + physicalFeeling + ' about this. ' +
+              'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
+              'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
+              'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
+              'You said now is ' + answerTime + ' time for this. ' +
+              'You said your past experience with this is ' + pastExperience + '. ' +
+              'When asked if this decision could be fun you said '+ determineFun + '!');
       }
       else {
-          app.tell('This might not be the best decision. Maybe try thinking about it more! ' + x + ' variable');
+          app.tell('This might not be the best decision. Maybe try thinking about it more! ' + x + ' variable. '
+              + 'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
+              'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
+              'You feel ' + physicalFeeling + ' about this. ' +
+              'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
+              'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
+              'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
+              'You said now is ' + answerTime + ' time for this. ' +
+              'You said your past experience with this is ' + pastExperience + '. ' +
+              'When asked if this decision could be fun you said '+ determineFun + '!');
       }
 
 
