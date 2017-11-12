@@ -109,7 +109,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
                       x += 1;
                   }
                   if (correctTime !== null) {
-                      if (correctTime.indexOf("yes") !== -1) {
+                      if (correctTime.indexOf("es") !== -1 || correctTime.indexOf("eah") !== -1) {
                           x += 1;
                       }
                   }
