@@ -13,7 +13,6 @@ const COMMITMENT_ARGUMENT = 'commitment_level';
 const PHYSICAL_FEELING_ARGUMENT = 'physical_feeling';
 const GOALS_ARGUMENT = 'goals_aligned';
 
-
 exports.decisionMaker = functions.https.onRequest((request, response) => {
   const app = new App({request, response});
   console.log('Request headers: ' + JSON.stringify(request.headers));
@@ -26,9 +25,11 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
     let timePeriod = app.getArgument(TIME_PERIOD_ARGUMENT);
     let commitmentLevel = app.getArgument(COMMITMENT_ARGUMENT);
     let physicalFeeling= app.getArgument(PHYSICAL_FEELING_ARGUMENT);
+    let goalAlignment = app.getArgument(GOALS_ARGUMENT);
     app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod + ' days!' +
         'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
-        'Your body feels ' + physicalFeeling + ' about this. ');
+        'Your body feels ' + physicalFeeling + ' about this. ' +
+        'This decision is ' + goalAlignment + ' with your long-term goals.');
 
   }
   // d. build an action map, which maps intent names to functions
