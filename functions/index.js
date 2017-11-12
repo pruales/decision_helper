@@ -38,10 +38,10 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
     let pastExperience = app.getArgument(PAST_EXPERIENCES_ARGUMENT);
     let determineFun = app.getArgument(FUN_ARGUMENT);
 
-    if(correctTime=='yes'){
+    if(correctTime=='Yes'){
         var answerTime = 'a good';
     }
-    else if(correctTime=='no'){
+    else if(correctTime=='No'){
         var answerTime = 'not a good';
     }
     app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '. ' +
