@@ -46,7 +46,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
     let determineFun = app.getArgument(FUN_ARGUMENT);
 
     let text = sentiment;
-
+      
     response = '';
 
     const document = {
@@ -69,6 +69,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
 
               if(correctTime=='Yes'){
                   var answerTime = 'a good';
+
               }
               else if(correctTime=='No'){
                   var answerTime = 'not a good';
@@ -117,6 +118,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
                   //********************
 
 // ----DAYS WEEKS
+
               else if ((timeString.indexOf("day") !== -1) || (timeString.indexOf("wk") !== -1)){
                   console.log('day');
                   console.log(`comitmentlevel: ${commitmentLevel}`)
@@ -235,6 +237,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
                       'You said your past experience with this is ' + pastExperience + '. ' +
                       'When asked if this decision could be fun you said '+ determineFun + '!';
               }
+
 
 
 
