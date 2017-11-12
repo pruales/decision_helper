@@ -23,8 +23,8 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
     let name = app.getArgument(NAME_ARGUMENT);
     let timePeriod = app.getArgument(TIME_PERIOD_ARGUMENT);
     let commitmentLevel = app.getArgument(COMMITMENT_ARGUMENT);
-    app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod + ' days!' +
-        'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel);
+    app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' '+ timePeriod.unit +
+        ' On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel);
 
   }
   // d. build an action map, which maps intent names to functions
