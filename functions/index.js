@@ -45,9 +45,10 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
     let pastExperience = app.getArgument(PAST_EXPERIENCES_ARGUMENT);
     let determineFun = app.getArgument(FUN_ARGUMENT);
 
-    let text = sentiment;
+    let text = sentiment + ' ' + physicalFeeling;
       
     response = '';
+
 
     const document = {
   	content: text,
@@ -203,45 +204,25 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
 
 
               else {
-                  response += 'Alright ' + name + ', you received a score of ' + x + ' out of 7. You should think about it more. '
-                      + 'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
-                      'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
-                      'You feel ' + physicalFeeling + ' about this. ' +
-                      'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
-                      'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
-                      'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
-                      'You said now is ' + answerTime + ' time for this. ' +
-                      'You said your past experience with this is ' + pastExperience + '. ' +
-                      'When asked if this decision could be fun you said '+ determineFun + '!';
+                  response += 'Alright ' + name + ', you received a score of ' + x + ' out of 8. You should think about it more. ';
 
               }
 
-              if (x >= 5){
-                  response+= 'Hey ' + name + ', you received a score of ' + x + ' out of 8. Sounds like a good idea to me. My help is just ' +
-                      'suggested advice and should be used with common sense. ' +
-                      'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
-                      'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
-                      'You feel ' + physicalFeeling + ' about this. ' +
-                      'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
-                      'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
-                      'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
-                      'You said now is ' + answerTime + ' time for this. ' +
-                      'You said your past experience with this is ' + pastExperience + '. ' +
-                      'When asked if this decision could be fun you said '+ determineFun + '!';
-
+              if (x >= 7){
+                  response+= 'Hello ' + name + ', you received a score of ' + x + ' out of 8. Sounds like a good idea to me. My help is just ' +
+                      'suggested advice and should be used with common sense. ';
+              }
+              else if (x < 7 && x >=5){
+                  response+= 'Hey ' + name + ', you received a score of ' + x + ' out of 8. Sounds like you are on the right track. ' +
+                      'Get some advice from a real humanoid. My help is just ' + 'suggested advice and should be used with common sense. ';
+              }
+              else if (x < 5 && x >=3){
+                  response+= 'Hi ' + name + ', you received a score of ' + x + ' out of 8. Sounds like an idea that needs some work, ' +
+                      'but has potential. My help is just ' + 'suggested advice and should be used with common sense. ';
               }
               else {
                   response+= 'Alright ' + name + ', you received a score of ' + x + ' out of 8. This might not be the best decision for you. ' +
-                      'Take some more time to think about it. My help is just suggested advice and should be used with common sense. '
-                      + 'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
-                      'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
-                      'You feel ' + physicalFeeling + ' about this. ' +
-                      'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
-                      'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
-                      'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
-                      'You said now is ' + answerTime + ' time for this. ' +
-                      'You said your past experience with this is ' + pastExperience + '. ' +
-                      'When asked if this decision could be fun you said '+ determineFun + '!';
+                      'Take some more time to think about it. My help is just suggested advice and should be used with common sense. ';
               }
 
 
@@ -253,7 +234,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
               app.tell(response);
           })
           .catch(err => {
-              app.tell('your trash!');
+              app.tell('There is an error.');
               console.error('ERROR:', err);
           });
 
