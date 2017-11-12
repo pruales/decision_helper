@@ -80,7 +80,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
               console.log(timeString);
               console.log(timeString.indexOf("day") !== -1);
 
-              if (sentiment > 0){
+              if (sentiment.score > 0){
                   x += 1;
               }
 
