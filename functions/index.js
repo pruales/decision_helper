@@ -30,7 +30,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
     let goalAlignment = app.getArgument(GOALS_ARGUMENT);
     let riskLevel = app.getArgument(RISKS_ARGUMENT);
     let reverseRisk = app.getArgument(OPPOSITE_RISKS_ARGUMENT);
-    app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod + ' days!' +
+    app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.units +
         'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
         'You feel ' + physicalFeeling + ' about this. ' +
         'This decision is ' + goalAlignment + ' with your long-term goals. ' +
