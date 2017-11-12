@@ -46,13 +46,13 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
         var answerTime = 'not a good';
     }
       //********************
-      var x =0;
+      var x=0;
       var timeString = timePeriod.unit;
       console.log(timeString);
 // ----SECONDS MINUTES HOURS
-      if ((timeString.indexOf("s(s)") !== -1) || (timeString.indexOf("minutes") !== -1) ||
+      if ((timeString.indexOf("s(s)") !== -1) || (timeString.indexOf("min") !== -1) ||
           (timeString.indexOf("hours") !== -1)){
-          x = 0;
+          x+= 0;
           if (commitmentLevel >= 8){
               x+=1;
           }
@@ -88,8 +88,8 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
 
 
 // ----DAYS WEEKS
-      else if ((timeString.indexOf("days") !== -1) || (timeString.indexOf("weeks") !== -1)){
-          x = 0;
+      else if ((timeString.indexOf("day") !== -1) || (timeString.indexOf("week") !== -1)){
+          x+= 0;
           if (commitmentLevel >= 7){
               x+=1;
           }
@@ -123,8 +123,8 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
       }
 
 // ----MONTHS YEARS
-      else if ((timeString.indexOf("months") !== -1) || (timeString.indexOf("yr") !== -1)){
-          x = 1;
+      else if ((timeString.indexOf("month") !== -1) || (timeString.indexOf("yr") !== -1)){
+          x+= 1;
           if (commitmentLevel >= 6){
               x+=1;
           }
@@ -156,7 +156,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
       }
 
 
-      else {
+     /* else {
           app.tell('You should think about it more. ' + x + ' variable. '
           + 'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
               'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
@@ -168,10 +168,10 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
               'You said your past experience with this is ' + pastExperience + '. ' +
               'When asked if this decision could be fun you said '+ determineFun + '!');
       }
-
+    */
       if (x > 4){
-          app.tell('Sounds like a good idea to me! ' + x + ' variable. '
-              + 'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
+          app.tell('Sounds like a good idea to me! ' + x + ' variable. ' +
+              'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
               'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
               'You feel ' + physicalFeeling + ' about this. ' +
               'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
@@ -182,8 +182,8 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
               'When asked if this decision could be fun you said '+ determineFun + '!');
       }
       else {
-          app.tell('This might not be the best decision. Maybe try thinking about it more! ' + x + ' variable. '
-              + 'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
+          app.tell('This might not be the best decision. Maybe try thinking about it more! ' + x + ' variable. ' +
+              'Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
               'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
               'You feel ' + physicalFeeling + ' about this. ' +
               'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
