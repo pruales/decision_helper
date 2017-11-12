@@ -11,6 +11,7 @@ const NAME_ARGUMENT = 'given-name';
 const TIME_PERIOD_ARGUMENT = 'time_period';
 const COMMITMENT_ARGUMENT = 'commitment_level';
 const PHYSICAL_FEELING_ARGUMENT = 'physical_feeling';
+const GOALS_ARGUMENT = 'goals_aligned';
 
 
 exports.decisionMaker = functions.https.onRequest((request, response) => {
