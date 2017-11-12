@@ -46,9 +46,139 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
         var answerTime = 'not a good';
     }
 
+      //********************
+      var x =0;
+      var timeString = timePeriod.unit;
+
+// ----SECONDS MINUTES HOURS
+      if ((timeString.indexOf("seconds") !== -1) || (timeString.indexOf("minutes") !== -1) ||
+          (timeString.indexOf("hours") !== -1)){
+          x = 0;
+          if (commitmentLevel >= 8){
+              x+=1;
+          }
+          if (physicalFeeling != null){
+              x+=0;
+          }
+          if (goalAlignment != null){
+              var goalString = goalAlignment;
+              if (goalString.indexOf("not") !== -1 || goalString.indexOf("unsure") !== -1
+                  || goalString.indexOf("don't")!==-1){
+                  x+=0;
+              }
+              else{
+                  x+=1;
+              }
+          }
+          if (riskLevel < reverseRisk){
+              x+=1;
+          }
+          if (correctTime != null){
+              var correctString = correctTime;
+              if (correctString.indexOf("yes")!==-1){
+                  x+=1;
+              }
+          }
+          if (past_experiences.indexOf("positive")!==-1){
+              x+=1;
+          }
+          if (determineFun.indexOf("yes")!==-1){
+              x+=1;
+          }
+
+      }
+
+// ----DAYS WEEKS
+      else if ((timeString.indexOf("days") !== -1) || (timeString.indexOf("weeks") !== -1)){
+          x = 0;
+          if (commitmentLevel >= 7){
+              x+=1;
+          }
+          if (physicalFeeling != null){
+              x+=0;
+          }
+          if (goalAlignment != null){
+              var goalString = goalAlignment;
+              if (goalString.indexOf("not") !== -1 || goalString.indexOf("unsure") !== -1
+                  || goalString.indexOf("don't")!==-1){
+                  x+=0;
+              }
+              else{
+                  x+=1;
+              }
+          }
+          if (riskLevel < reverseRisk){
+              x+=1;
+          }
+          if (correctTime != null){
+              var correctString = correctTime;
+              if (correctString.indexOf("yes")!==-1){
+                  x+=1;
+              }
+          }
+          if (past_experiences.indexOf("positive")!==-1){
+              x+=1;
+          }
+          if (determineFun.indexOf("yes")!==-1){
+              x+=1;
+          }
+
+      }
+
+// ----MONTHS YEARS
+      else if ((timeString.indexOf("months") !== -1) || (timeString.indexOf("years") !== -1)){
+          x = 1;
+          if (commitmentLevel >= 6){
+              x+=1;
+          }
+          if (physicalFeeling != null){
+              x+=0;
+          }
+          if (goalAlignment != null){
+              var goalString = goalAlignment;
+              if (goalString.indexOf("not") !== -1 || goalString.indexOf("unsure") !== -1
+                  || goalString.indexOf("don't")!==-1){
+                  x+=0;
+              }
+              else{
+                  x+=1;
+              }
+          }
+          if (riskLevel < reverseRisk){
+              x+=1;
+          }
+          if (correctTime != null){
+              var correctString = correctTime;
+              if (correctString.indexOf("yes")!==-1){
+                  x+=1;
+              }
+          }
+          if (past_experiences.indexOf("positive")!==-1){
+              x+=1;
+          }
+          if (determineFun.indexOf("yes")!==-1){
+              x+=1;
+          }
+      }
 
 
-    app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
+      else {
+          app.tell('You should think about it more. ' + x + ' variable');
+      }
+
+      if (x > 4){
+          app.tell('Sounds like a good idea to me! ' + x + ' variable');
+      }
+      else {
+          app.tell('This might not be the best decision. Maybe try thinking about it more! ' + x + ' variable');
+      }
+
+
+
+//*********************
+
+
+      app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
         'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
         'You feel ' + physicalFeeling + ' about this. ' +
         'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
