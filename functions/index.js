@@ -44,7 +44,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
     else if(correctTime=='no'){
         var answerTime = 'not a good';
     }
-    app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.units + '. ' +
+    app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '. ' +
         'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
         'You feel ' + physicalFeeling + ' about this. ' +
         'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
