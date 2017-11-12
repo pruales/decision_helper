@@ -49,7 +49,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
       //********************
       var x =0;
       var timeString = timePeriod.unit;
-
+      console.log(timeString);
 // ----SECONDS MINUTES HOURS
       if ((timeString.indexOf("seconds") !== -1) || (timeString.indexOf("minutes") !== -1) ||
           (timeString.indexOf("hours") !== -1)){
