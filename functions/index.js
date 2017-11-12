@@ -38,21 +38,20 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
     let pastExperience = app.getArgument(PAST_EXPERIENCES_ARGUMENT);
     let determineFun = app.getArgument(FUN_ARGUMENT);
 
-    if(correctTime=='yes'){
+    if(correctTime=='Yes'){
         var answerTime = 'a good';
     }
-    else if(correctTime=='no'){
+    else if(correctTime=='No'){
         var answerTime = 'not a good';
     }
 
-    console.log(timePeriod);
-    app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '. ' +
+    app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod.amount + ' ' + timePeriod.unit + '(s). ' +
         'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
         'You feel ' + physicalFeeling + ' about this. ' +
         'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
         'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
         'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
-        'You said now is ' + answerTime + ' for this. ' +
+        'You said now is ' + answerTime + ' good for this. ' +
         'You said your past experience with this is ' + pastExperience + '. ' +
         'When asked if this decision could be fun you said '+ determineFun + '!');
 
