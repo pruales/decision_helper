@@ -45,11 +45,10 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
     else if(correctTime=='No'){
         var answerTime = 'not a good';
     }
-
       //********************
       var x =0;
       var timeString = timePeriod.unit;
-
+      console.log(timeString);
 // ----SECONDS MINUTES HOURS
       if ((timeString.indexOf("s(s)") !== -1) || (timeString.indexOf("minutes") !== -1) ||
           (timeString.indexOf("hours") !== -1)){
@@ -57,13 +56,13 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
           if (commitmentLevel >= 8){
               x+=1;
           }
-          if (physicalFeeling != null){
+          if (physicalFeeling !== null){
               x+=0;
           }
-          if (goalAlignment != null){
+          if (goalAlignment !== null){
               var goalString = goalAlignment;
-              if (goalString.indexOf("not") !== -1 || goalString.indexOf("unsure") !== -1
-                  || goalString.indexOf("don't")!==-1){
+              if (goalString.indexOf("not") !== -1 || goalString.indexOf("unsure") !== -1 ||
+                  goalString.indexOf("don't")!==-1){
                   x+=0;
               }
               else{
@@ -73,20 +72,20 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
           if (riskLevel < reverseRisk){
               x+=1;
           }
-          if (correctTime != null){
-              var correctString = correctTime;
-              if (correctString.indexOf("yes")!==-1){
+          if (correctTime !== null){
+              if (correctTime.indexOf("yes")!==-1){
                   x+=1;
               }
           }
-          if (past_experiences.indexOf("positive")!==-1){
+          if (pastExperience.indexOf("positive")!==-1){
               x+=1;
           }
           if (determineFun.indexOf("yes")!==-1){
               x+=1;
           }
 
-      }
+      //********************
+
 
 // ----DAYS WEEKS
       else if ((timeString.indexOf("days") !== -1) || (timeString.indexOf("weeks") !== -1)){
@@ -94,13 +93,12 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
           if (commitmentLevel >= 7){
               x+=1;
           }
-          if (physicalFeeling != null){
+          if (physicalFeeling !== null){
               x+=0;
           }
-          if (goalAlignment != null){
-              var goalString = goalAlignment;
-              if (goalString.indexOf("not") !== -1 || goalString.indexOf("unsure") !== -1
-                  || goalString.indexOf("don't")!==-1){
+          if (goalAlignment !== null){
+              if (goalAlignment.indexOf("not") !== -1 || goalAlignment.indexOf("unsure") !== -1 ||
+                  goalAlignment.indexOf("don't")!==-1){
                   x+=0;
               }
               else{
@@ -110,13 +108,12 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
           if (riskLevel < reverseRisk){
               x+=1;
           }
-          if (correctTime != null){
-              var correctString = correctTime;
-              if (correctString.indexOf("yes")!==-1){
+          if (correctTime !== null){
+              if (correctTime.indexOf("yes")!==-1){
                   x+=1;
               }
           }
-          if (past_experiences.indexOf("positive")!==-1){
+          if (pastExperience.indexOf("positive")!==-1){
               x+=1;
           }
           if (determineFun.indexOf("yes")!==-1){
@@ -131,13 +128,12 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
           if (commitmentLevel >= 6){
               x+=1;
           }
-          if (physicalFeeling != null){
+          if (physicalFeeling !== null){
               x+=0;
           }
-          if (goalAlignment != null){
-              var goalString = goalAlignment;
-              if (goalString.indexOf("not") !== -1 || goalString.indexOf("unsure") !== -1
-                  || goalString.indexOf("don't")!==-1){
+          if (goalAlignment !== null){
+              if (goalAlignment.indexOf("not") !== -1 || goalAlignment.indexOf("unsure") !== -1 ||
+                  goalAlignment.indexOf("don't")!==-1){
                   x+=0;
               }
               else{
@@ -147,13 +143,11 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
           if (riskLevel < reverseRisk){
               x+=1;
           }
-          if (correctTime != null){
-              var correctString = correctTime;
-              if (correctString.indexOf("yes")!==-1){
+          if (correctTime.indexOf("yes")!==-1){
                   x+=1;
               }
           }
-          if (past_experiences.indexOf("positive")!==-1){
+          if (pastExperience.indexOf("positive")!==-1){
               x+=1;
           }
           if (determineFun.indexOf("yes")!==-1){
@@ -170,7 +164,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
               'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
               'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
               'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
-              'You said now is ' + answerTime + ' time for this. ' +
+              'You said now is ' + correctTime + ' time for this. ' +
               'You said your past experience with this is ' + pastExperience + '. ' +
               'When asked if this decision could be fun you said '+ determineFun + '!');
       }
@@ -183,7 +177,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
               'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
               'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
               'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
-              'You said now is ' + answerTime + ' time for this. ' +
+              'You said now is ' + correctTime + ' time for this. ' +
               'You said your past experience with this is ' + pastExperience + '. ' +
               'When asked if this decision could be fun you said '+ determineFun + '!');
       }
@@ -195,9 +189,17 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
               'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
               'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
               'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
-              'You said now is ' + answerTime + ' time for this. ' +
+              'You said now is ' + correctTime + ' time for this. ' +
               'You said your past experience with this is ' + pastExperience + '. ' +
               'When asked if this decision could be fun you said '+ determineFun + '!');
+      }
+
+      if (x > 4){
+          app.tell('Sounds like a good idea to me! ' + x + ' variable');
+      }
+      else {
+          app.tell('This might not be the best decision. Maybe try thinking about it more! ' + x + ' variable');
+
       }
 
 
@@ -211,7 +213,7 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
         'This decision is ' + goalAlignment + ' aligned with your long-term goals. ' +
         'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ' +
         'You rated the risks of not doing it a ' + reverseRisk + ' on a scale of 1-10. ' +
-        'You said now is ' + answerTime + ' time for this. ' +
+        'You said now is ' + correctTime + ' time for this. ' +
         'You said your past experience with this is ' + pastExperience + '. ' +
         'When asked if this decision could be fun you said '+ determineFun + '!');
 
