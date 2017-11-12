@@ -12,6 +12,7 @@ const TIME_PERIOD_ARGUMENT = 'time_period';
 const COMMITMENT_ARGUMENT = 'commitment_level';
 const PHYSICAL_FEELING_ARGUMENT = 'physical_feeling';
 const GOALS_ARGUMENT = 'goals_aligned';
+const RISKS_ARGUMENT = 'decision_risks';
 
 exports.decisionMaker = functions.https.onRequest((request, response) => {
   const app = new App({request, response});
@@ -26,10 +27,12 @@ exports.decisionMaker = functions.https.onRequest((request, response) => {
     let commitmentLevel = app.getArgument(COMMITMENT_ARGUMENT);
     let physicalFeeling= app.getArgument(PHYSICAL_FEELING_ARGUMENT);
     let goalAlignment = app.getArgument(GOALS_ARGUMENT);
+    let riskLevel = app.getArgument(RISKS_ARGUMENT);
     app.tell('Alright '+name+','+' you have thought about this for ' + timePeriod + ' days!' +
         'On a scale of 1-10 you have rated your commitment as a ' +  commitmentLevel + '. ' +
-        'Your body feels ' + physicalFeeling + ' about this. ' +
-        'This decision is ' + goalAlignment + ' with your long-term goals.');
+        'You feel ' + physicalFeeling + ' about this. ' +
+        'This decision is ' + goalAlignment + ' with your long-term goals. ' +
+        'On a scale of 1-10 you rated the risks of this decision at a ' + riskLevel + '. ');
 
   }
   // d. build an action map, which maps intent names to functions
